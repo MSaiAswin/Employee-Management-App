@@ -1,12 +1,8 @@
-# Task 2
+# Task 5
 
 ## Steps
- - First edit /src/cofig/environments/development.rb and add the line config.hosts << "loadbalance"
- - Here "loadbalance" indicates the hostname that we use as the name for our upstream element in the /web/default.conf file
- - Next stop, remove the app container and the app image. Now rebuild the app image and create 3 app containers.
- - Next note down the IP Addresses of all the three containers.
- - Now add the upstream element with the name "loadbalance" and define the three servers and their IPs with the ports as following.
- ![image](https://user-images.githubusercontent.com/78261857/229306515-3e62e3f7-9984-4d24-b88b-41ce6c70ec3a.png)
- - Now rebuild the nginx images and containers and run.
- - When we open localhost:8080 we should get the same output as before.
- ![Screenshot from 2023-04-01 03-42-36](https://user-images.githubusercontent.com/78261857/229302046-1066bd10-bc94-4c4c-8623-c86876772e7d.png)
+ - First create to directories ./data/db and ./web/nginx
+ - Then remove and delete the nginx and mysql containers
+ - Then run the command "docker run --name db -d --expose 3306 -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=app -e MYSQL_USER=user -e MYSQL_PASSWORD=passsword --restart always --hostname db -v ./data/db:/var/lib/mysql  mysql:5.7" to create the mysql container and associate it with the the created directory to persist the db data
+ - Then run the command "docker run --name nginx-cont -d -p 8080:80 -v ./web/nginx:/etc/nginx/conf.d nginx-r-proxy" to create the nginx container and associate it with the the created directory to persist the config files.
+ - Then run the containers and we will see that the Employee Management page is up and runninng.
