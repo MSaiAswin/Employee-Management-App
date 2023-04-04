@@ -67,3 +67,5 @@ src/.yarn-integrity
 src/storage/*
 !src/storage/.keep
 src/public/uploads
+
+data/db/*

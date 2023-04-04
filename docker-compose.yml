@@ -1,0 +1,64 @@
+version: '3'
+services:
+  app1:
+    image: empapp
+    hostname: app1
+    depends_on:
+      - db
+    environment:
+      DB_USER:  user
+      DB_PASSWORD: password
+      DB_NAME: app
+      DB_HOST: db
+    expose:
+      - 3000
+  app2:
+    image: empapp
+    hostname: app2
+    depends_on:
+      - db
+    environment:
+      DB_USER:  user
+      DB_PASSWORD: password
+      DB_NAME: app
+      DB_HOST: db
+    expose:
+      - 3000
+  app3:
+    image: empapp
+    hostname: app3
+    depends_on:
+      - db
+    environment:
+      DB_USER:  user
+      DB_PASSWORD: password
+      DB_NAME: app
+      DB_HOST: db
+    expose:
+      - 3000
+  
+  db:
+    image: mysql:5.7
+    restart: always
+    hostname: db
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: app
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    expose:
+      - 3306
+    volumes:
+      - ./data/db/:/var/lib/mysql/
+
+  nginx:
+    image: nginx-r-proxy
+    ports:
+      - 8080:80
+      - 443:443
+    volumes:
+      - ./web/nginx/:/etc/nginx/conf.d/
+    depends_on:
+      - app1
+      - app2
+      - app3
