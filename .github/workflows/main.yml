@@ -18,3 +18,12 @@ jobs:
       run: docker build -t saiaswinmadhavan/empapp:v1 ./src
     - name: Push the Docker image
       run: docker push saiaswinmadhavan/empapp:v1
+
+  deploy:
+  
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Deploy challenge
+      run: python3 challenge.py
